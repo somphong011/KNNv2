@@ -13,11 +13,11 @@ col1, col2 = st.columns(2)
 
 with col1:
    st.subheader("✅ ไม่เป็นโรคหัวใจ (Normal)")
-   st.image("https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80", caption="สุขภาพหัวใจแข็งแรง")
+   st.image("https://media.istockphoto.com/id/464832464/th/%E0%B9%80%E0%B8%A7%E0%B8%84%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C/%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B9%83%E0%B8%88%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%94%E0%B8%B4%E0%B9%89%E0%B8%99%E0%B8%95%E0%B8%B1%E0%B8%A7%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%95%E0%B8%B9%E0%B8%99.jpg?s=612x612&w=0&k=20&c=T4mf1S8SQU-VFmW1n_-9ThTj9-ytCLuvMCgkPwcZHJI=", caption="สุขภาพหัวใจแข็งแรง")
 
 with col2:
    st.subheader("⚠️ เป็นโรคหัวใจ (Heart Disease)")
-   st.image("https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?auto=format&fit=crop&w=600&q=80", caption="มีความเสี่ยงโรคหัวใจ")
+   st.image("https://chiangmairam.com/upload/ck/1741580617.jpg", caption="มีความเสี่ยงโรคหัวใจ")
 
 st.markdown("---")
 
