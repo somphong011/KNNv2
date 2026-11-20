@@ -2,18 +2,23 @@ from sklearn.neighbors import KNeighborsClassifier
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
 
 st.header("โปรเจคการตรวจโรคหัวใจ")
+
+# กำหนดตำแหน่งรูปภาพ (ถ้ามีไฟล์ในเครื่องจะใช้ไฟล์ในเครื่อง ถ้าไม่มีบน Cloud จะดึงรูปออนไลน์มาแสดงแทนอัตโนมัติ)
+IMG_YES = "./img/yes.jpg" if os.path.exists("./img/yes.jpg") else "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?auto=format&fit=crop&w=600&q=80"
+IMG_NO = "./img/no.jpg" if os.path.exists("./img/no.jpg") else "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80"
 
 col1, col2 = st.columns(2)
 
 with col1:
     st.header("เป็นโรคหัวใจ")
-    st.image("./img/yes.jpg")
+    st.image(IMG_YES)
 
 with col2:
     st.header("ไม่เป็นโรคหัวใจ")
-    st.image("./img/no.jpg")
+    st.image(IMG_NO)
 
 html_7 = """
 <div style="background-color:#EC7063;padding:15px;border-radius:15px 15px 15px 15px;border-style:'solid';border-color:black">
@@ -23,18 +28,23 @@ html_7 = """
 st.markdown(html_7, unsafe_allow_html=True)
 st.markdown("")
 
-dt = pd.read_csv("./data/Heart3.csv")
-st.write(dt.head(10))
+# โหลดไฟล์ข้อมูลพร้อมระบบแจ้งเตือนหากหาไฟล์ไม่พบ
+if os.path.exists("./data/Heart3.csv"):
+    dt = pd.read_csv("./data/Heart3.csv")
+    st.write(dt.head(10))
 
-# นับจำนวนผู้ที่เป็นและไม่เป็นโรคหัวใจเพื่อแสดงกราฟแท่ง
-heart_counts = dt['HeartDisease'].value_counts().rename(
-    index={0: "ไม่เป็นโรคหัวใจ (0)", 1: "เป็นโรคหัวใจ (1)"}
-)
+    # นับจำนวนผู้ที่เป็นและไม่เป็นโรคหัวใจเพื่อแสดงกราฟแท่ง
+    heart_counts = dt['HeartDisease'].value_counts().rename(
+        index={0: "ไม่เป็นโรคหัวใจ (0)", 1: "เป็นโรคหัวใจ (1)"}
+    )
 
-if st.button("แสดงการจินตทัศน์ข้อมูล"):
-    st.bar_chart(heart_counts)
+    if st.button("แสดงการจินตทัศน์ข้อมูล"):
+        st.bar_chart(heart_counts)
+    else:
+        st.write("ไม่แสดงข้อมูล")
 else:
-    st.write("ไม่แสดงข้อมูล")
+    st.error("⚠️ ไม่พบไฟล์ './data/Heart3.csv' กรุณาตรวจสอบว่าได้อัปโหลดโฟลเดอร์ data และไฟล์ Heart3.csv ขึ้น GitHub แล้วหรือยัง")
+    st.stop()
 
 html_8 = """
 <div style="background-color:#6BD5DA;padding:15px;border-radius:15px 15px 15px 15px;border-style:'solid';border-color:black">
@@ -121,9 +131,9 @@ if st.button("ทำนายผล"):
 
     if out[0] == 1:
         st.error("ผลการทำนาย: มีความเสี่ยงเป็นโรคหัวใจ (1)")
-        st.image("./img/yes.jpg")
+        st.image(IMG_YES)
     else:
         st.success("ผลการทำนาย: ไม่เป็นโรคหัวใจ (0)")
-        st.image("./img/no.jpg")
+        st.image(IMG_NO)
 else:
     st.write("ไม่ทำนาย")
