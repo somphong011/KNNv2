@@ -2,18 +2,30 @@ from sklearn.neighbors import KNeighborsClassifier
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
 
 st.header("โปรเจคการตรวจโรคหัวใจ")
+
+# ค้นหาไฟล์รูปภาพที่มีอยู่ในโฟลเดอร์ img อัตโนมัติ
+img_files = sorted([f for f in os.listdir("./img") if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp'))]) if os.path.exists("./img") else []
+
+if len(img_files) >= 2:
+    IMG_YES = os.path.join("./img", img_files[0])  # รูปที่ 1
+    IMG_NO = os.path.join("./img", img_files[1])   # รูปที่ 2
+else:
+    # รูปสำรองกรณีโฟลเดอร์ img ไม่มีไฟล์
+    IMG_YES = "https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?auto=format&fit=crop&w=600&q=80"
+    IMG_NO = "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=80"
 
 col1, col2 = st.columns(2)
 
 with col1:
     st.header("เป็นโรคหัวใจ")
-    st.image("./img/yes.jpg")
+    st.image(IMG_YES)
 
 with col2:
     st.header("ไม่เป็นโรคหัวใจ")
-    st.image("./img/no.jpg")
+    st.image(IMG_NO)
 
 html_7 = """
 <div style="background-color:#EC7063;padding:15px;border-radius:15px 15px 15px 15px;border-style:'solid';border-color:black">
@@ -121,9 +133,9 @@ if st.button("ทำนายผล"):
 
     if out[0] == 1:
         st.error("ผลการทำนาย: มีความเสี่ยงเป็นโรคหัวใจ (1)")
-        st.image("./img/yes.jpg")
+        st.image(IMG_YES)
     else:
         st.success("ผลการทำนาย: ไม่เป็นโรคหัวใจ (0)")
-        st.image("./img/no.jpg")
+        st.image(IMG_NO)
 else:
     st.write("ไม่ทำนาย")
