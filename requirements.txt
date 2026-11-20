@@ -1,8 +1,9 @@
-numpy
+numpy<2.0.0
 pandas
 matplotlib
 seaborn
 streamlit
-plotly==5.9.0
+plotly>=5.24.0
 openpyxl
 scikit-learn
+pillow
